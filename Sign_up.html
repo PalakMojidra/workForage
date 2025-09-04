@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up Page</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .main-section {
+      background-color: #f5f7fa;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .signup-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 950px;
+      width: 100%;
+    }
+
+    .signup-box {
+      flex: 1;
+      background: white;
+      border-radius: 15px;
+      padding: 35px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      min-height: 480px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-right: 40px;
+    }
+
+    .illustration {
+      flex: 1.1;
+      max-width: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .illustration img {
+      width: 100%;
+      max-width: 400px;
+      height: 500px;
+      object-fit: contain;
+    }
+
+    .input-group-text {
+      background: #fff;
+      border-radius: 8px 0 0 8px;
+      border: 1px solid #ced4da;
+      border-right: 0;
+    }
+    .input-group .form-control,
+    .input-group select {
+      border-radius: 0 8px 8px 0;
+      border: 1px solid #ced4da;
+      border-left: 0;
+    }
+    .input-group:focus-within .input-group-text,
+    .input-group:focus-within .form-control,
+    .input-group:focus-within select {
+      border-color: #3b4cca;
+      box-shadow: none;
+    }
+
+    .btn-signup {
+      width: 100%;
+      border-radius: 8px;
+      background-color: #3b4cca;
+      color: white;
+    }
+    .btn-signup:hover {
+      background-color: #141e72;
+      color: white;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .signup-wrapper {
+        flex-direction: column-reverse;
+        max-width: 420px;
+      }
+      .signup-box {
+        margin-right: 0;
+        margin-top: 30px;
+        width: 100%;
+      }
+      .illustration img {
+        height: 280px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="main-section">
+    <div class="signup-wrapper">
+
+      <!-- Sign Up Form Section -->
+      <div class="signup-box">
+        <h2 class="mb-4 fw-bold text-center">Sign Up</h2>
+
+        <!-- Select Role -->
+        <div class="mb-3 input-group">
+          <span class="input-group-text"><i class="bi bi-briefcase"></i></span>
+          <select id="role" class="form-select">
+            <option value="" disabled selected>Select account type</option>
+            <option value="freelancer">Freelancer</option>
+            <option value="business">Business Owner</option>
+          </select>
+        </div>
+        <small id="roleError" class="text-danger d-none">Please select your role</small>
+
+        <!-- Full Name -->
+        <div class="mb-3 input-group">
+          <span class="input-group-text"><i class="bi bi-person"></i></span>
+          <input type="text" id="name" class="form-control" placeholder="Full Name">
+        </div>
+        <small id="nameError" class="text-danger d-none">Please enter your name</small>
+
+        <!-- Email -->
+        <div class="mb-3 input-group">
+          <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+          <input type="email" id="email" class="form-control" placeholder="Email address">
+        </div>
+        <small id="emailError" class="text-danger d-none">Please enter a valid email</small>
+
+        <!-- Password -->
+        <div class="mb-3 input-group">
+          <span class="input-group-text"><i class="bi bi-lock"></i></span>
+          <input type="password" id="password" class="form-control" placeholder="Password">
+        </div>
+        <small id="passwordError" class="text-danger d-none">
+          Password must be 8+ chars with uppercase, lowercase, number, and special character
+        </small>
+
+        <!-- Confirm Password -->
+        <div class="mb-3 input-group">
+          <span class="input-group-text"><i class="bi bi-arrow-repeat"></i></span>
+          <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password">
+        </div>
+        <small id="confirmPasswordError" class="text-danger d-none">Passwords do not match</small>
+
+        <!-- Sign Up Button -->
+        <button class="btn btn-signup" onclick="validateSignup()">Sign Up</button>
+
+        <!-- Login link -->
+        <p class="login-link mt-3">
+          Already have an account? <a href="Log_in.html">Log in</a>
+        </p>
+      </div>
+
+      <!-- Illustration Section -->
+      <div class="illustration">
+        <img src="Sign_up.png" alt="Illustration">
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function validateSignup() {
+      const role = document.getElementById("role");
+      const name = document.getElementById("name");
+      const email = document.getElementById("email");
+      const password = document.getElementById("password");
+      const confirmPassword = document.getElementById("confirmPassword");
+
+      const roleError = document.getElementById("roleError");
+      const nameError = document.getElementById("nameError");
+      const emailError = document.getElementById("emailError");
+      const passwordError = document.getElementById("passwordError");
+      const confirmPasswordError = document.getElementById("confirmPasswordError");
+
+      let isValid = true;
+
+      // Role check
+      if (!role.value) {
+        role.classList.add("is-invalid");
+        roleError.classList.remove("d-none");
+        isValid = false;
+      } else {
+        role.classList.remove("is-invalid");
+        roleError.classList.add("d-none");
+      }
+
+      // Name check
+      if (name.value.trim() === "") {
+        name.classList.add("is-invalid");
+        nameError.classList.remove("d-none");
+        isValid = false;
+      } else {
+        name.classList.remove("is-invalid");
+        nameError.classList.add("d-none");
+      }
+
+      // Email regex (must end with .com/.net/.org etc. 2–3 chars)
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,3}$/;
+      if (!emailRegex.test(email.value.trim())) {
+        email.classList.add("is-invalid");
+        emailError.textContent = "Please enter a valid email (e.g. user@domain.com)";
+        emailError.classList.remove("d-none");
+        isValid = false;
+      } else {
+        email.classList.remove("is-invalid");
+        emailError.classList.add("d-none");
+      }
+
+      // Password regex (8+ chars, uppercase, lowercase, number, special char)
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+      if (!passwordRegex.test(password.value.trim())) {
+        password.classList.add("is-invalid");
+        passwordError.classList.remove("d-none");
+        isValid = false;
+      } else {
+        password.classList.remove("is-invalid");
+        passwordError.classList.add("d-none");
+      }
+
+      // Confirm password check
+      if (confirmPassword.value.trim() === "" || confirmPassword.value !== password.value) {
+        confirmPassword.classList.add("is-invalid");
+        confirmPasswordError.classList.remove("d-none");
+        isValid = false;
+      } else {
+        confirmPassword.classList.remove("is-invalid");
+        confirmPasswordError.classList.add("d-none");
+      }
+
+      if (isValid) {
+        alert("Sign up successful!");
+      }
+    }
+  </script>
+</body>
+</html>
